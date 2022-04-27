@@ -8,6 +8,8 @@
 
     <include
         android:id="@+id/fixed_header"
-        layout="@layout/activity_fixed_header" />
+        layout="@layout/activity_fixed_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

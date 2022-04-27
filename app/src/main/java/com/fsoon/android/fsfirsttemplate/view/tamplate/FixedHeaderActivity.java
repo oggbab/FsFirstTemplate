@@ -26,7 +26,7 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHeader = findViewById(R.id.header);
+//        mHeader = findViewById(R.id.header);
 //                mHeaderViewGroup = (ViewGroup) getLayoutInflater().inflate(R.layout.view_base_fixed_header, null);
     }
 
@@ -55,13 +55,13 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void setTitle(String title) {
-        TextView titleTextView = mHeader.findViewById(R.id.titleTextView);
+        TextView titleTextView = findViewById(R.id.titleTextView);
         titleTextView.setText(title);
     }
 
     private void initButton() {
-        mLeftButton = mHeader.findViewById(R.id.rightButton);
-        mRightButton = mHeader.findViewById(R.id.leftButton);
+        mLeftButton = findViewById(R.id.rightButton);
+        mRightButton = findViewById(R.id.leftButton);
         mLeftButton.setOnClickListener(this);
         mRightButton.setOnClickListener(this);
     }
