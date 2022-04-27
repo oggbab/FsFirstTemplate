@@ -28,6 +28,9 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
 //        mHeader = findViewById(R.id.header);
 //                mHeaderViewGroup = (ViewGroup) getLayoutInflater().inflate(R.layout.view_base_fixed_header, null);
+
+        ViewGroup contentView = findViewById(R.id.content);
+        contentView.addView(findViewById(R.id.layout_root));
     }
 
     public void init(String title) {
