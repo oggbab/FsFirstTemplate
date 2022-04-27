@@ -1,18 +1,9 @@
 package com.fsoon.android.fsfirsttemplate.view.tamplate;
 
-import android.app.ActionBar;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.appcompat.widget.Toolbar;
 
 import com.fsoon.android.fsfirsttemplate.R;
 import com.fsoon.android.fsfirsttemplate.view.base.BaseActivity;
@@ -20,27 +11,18 @@ import com.fsoon.android.fsfirsttemplate.view.base.BaseActivity;
 public class FixedHeaderActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView mLeftButton, mRightButton;
-    private RelativeLayout mHeader;
-    private ViewGroup mHeaderViewGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mHeader = findViewById(R.id.header);
-//                mHeaderViewGroup = (ViewGroup) getLayoutInflater().inflate(R.layout.view_base_fixed_header, null);
-
-        ViewGroup contentView = findViewById(R.id.content);
-        contentView.addView(findViewById(R.id.layout_root));
     }
 
     public void init(String title) {
-//        initHeader();
         initButton();
         setTitle(title);
     }
 
     public void init(String title, boolean lVisible, boolean rVisible) {
-        initHeader();
         initButton();
         setTitle(title);
         setLeftButtonVisible(lVisible);
@@ -48,7 +30,6 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void init(String title, boolean lVisible, boolean rVisible, boolean lEnable, boolean rEnable) {
-        initHeader();
         initButton();
         setTitle(title);
         setLeftButtonVisible(lVisible);
@@ -67,29 +48,6 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
         mRightButton = findViewById(R.id.leftButton);
         mLeftButton.setOnClickListener(this);
         mRightButton.setOnClickListener(this);
-    }
-
-    public void initHeader() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
-        actionBar.setDisplayHomeAsUpEnabled(true);
-//        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-//        actionBar.setCustomView(mHeaderViewGroup, params);
-        actionBar.setCustomView(mHeaderViewGroup);
-
-/*        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        mHeaderViewGroup = (ViewGroup) getLayoutInflater().inflate(R.layout.view_base_fixed_header, null);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-        actionBar.setCustomView(mHeaderViewGroup, params);*/
     }
 
     @Override
