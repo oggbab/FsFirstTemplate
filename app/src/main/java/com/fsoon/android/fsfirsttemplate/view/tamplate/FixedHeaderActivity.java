@@ -27,12 +27,23 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fixed_header);
-        initView();
+//        initView();
     }
 
-    private void initView() {
-        initHeader();
-        initButton();
+    public void init(String title) {
+        setTitle(title);
+//        initHeader();
+//        initButton();
+    }
+
+    public void init(String title, boolean lVisible, boolean rVisible) {
+        setTitle(title);
+        setBackButtonEnable(lVisible);
+        setMenuButtonEnable(rVisible);
+    }
+
+    public void setTitle(String title) {
+
     }
 
     private void initButton() {
