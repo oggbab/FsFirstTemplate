@@ -6,4 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".view.test.TestActivity">
 
+    <include
+        android:id="@+id/fixed_header"
+        layout="@layout/activity_fixed_header" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
