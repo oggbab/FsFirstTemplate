@@ -2,9 +2,12 @@ package com.fsoon.android.fsfirsttemplate.view.tamplate;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -16,16 +19,18 @@ import com.fsoon.android.fsfirsttemplate.view.base.BaseActivity;
 public class FixedHeaderActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView mLeftButton, mRightButton;
-    private ViewGroup mHeader;
+    private RelativeLayout mHeader;
+    private ViewGroup mHeaderViewGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fixed_header);
+        mHeader = findViewById(R.id.header);
     }
 
     public void init(String title) {
-        initHeader();
+//        initHeader();
         initButton();
         setTitle(title);
     }
@@ -49,7 +54,7 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void setTitle(String title) {
-        TextView titleTextView = findViewById(R.id.titleTextView);
+        TextView titleTextView = mHeader.findViewById(R.id.titleTextView);
         titleTextView.setText(title);
     }
 
@@ -61,19 +66,23 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void initHeader() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
+/*        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mHeader = (ViewGroup) getLayoutInflater().inflate(R.layout.view_base_fixed_header, null);
-        mHeader.setBackgroundColor(Color.WHITE);
-        mHeader.setOutlineProvider(null);
-
+        mHeaderViewGroup = (ViewGroup) getLayoutInflater().inflate(R.layout.view_base_fixed_header, null);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-        actionBar.setCustomView(mHeader, params);
+        actionBar.setCustomView(mHeaderViewGroup, params);*/
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_tool_bar, menu);
+        return true;
     }
 
     @Override
@@ -87,11 +96,13 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void setLeftButtonVisible(boolean isVisible) {
-        mRightButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+        mLeftButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+        mLeftButton.setClickable(isVisible);
     }
 
     public void setRightButtonVisible(boolean isVisible) {
-        mLeftButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+        mRightButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+        mRightButton.setClickable(isVisible);
     }
 
     public void setLeftButtonEnable(boolean isEnable) {
@@ -99,10 +110,7 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void setRightButtonEnable(boolean isEnable) {
-        mLeftButton.setEnabled(isEnable);
+        mRightButton.setEnabled(isEnable);
     }
 
-    public void setHeaderVisible(boolean isVisible) {
-
-    }
 }
