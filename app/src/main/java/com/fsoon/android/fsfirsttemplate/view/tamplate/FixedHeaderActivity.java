@@ -1,56 +1,63 @@
 package com.fsoon.android.fsfirsttemplate.view.tamplate;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.fsoon.android.fsfirsttemplate.R;
 import com.fsoon.android.fsfirsttemplate.view.base.BaseActivity;
 
 public class FixedHeaderActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageView menuButton, backButton;
+    private ImageView mLeftButton, mRightButton;
     private ViewGroup mHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fixed_header);
-//        initView();
     }
 
     public void init(String title) {
+        initHeader();
+        initButton();
         setTitle(title);
-//        initHeader();
-//        initButton();
     }
 
     public void init(String title, boolean lVisible, boolean rVisible) {
+        initHeader();
+        initButton();
         setTitle(title);
-        setBackButtonEnable(lVisible);
-        setMenuButtonEnable(rVisible);
+        setLeftButtonVisible(lVisible);
+        setRightButtonVisible(rVisible);
+    }
+
+    public void init(String title, boolean lVisible, boolean rVisible, boolean lEnable, boolean rEnable) {
+        initHeader();
+        initButton();
+        setTitle(title);
+        setLeftButtonVisible(lVisible);
+        setRightButtonVisible(rVisible);
+        setLeftButtonEnable(lEnable);
+        setRightButtonEnable(rEnable);
     }
 
     public void setTitle(String title) {
-
+        TextView titleTextView = findViewById(R.id.titleTextView);
+        titleTextView.setText(title);
     }
 
     private void initButton() {
-        menuButton = mHeader.findViewById(R.id.menuButton);
-        backButton = mHeader.findViewById(R.id.backButton);
-        menuButton.setOnClickListener(this);
-        backButton.setOnClickListener(this);
+        mLeftButton = mHeader.findViewById(R.id.rightButton);
+        mRightButton = mHeader.findViewById(R.id.leftButton);
+        mLeftButton.setOnClickListener(this);
+        mRightButton.setOnClickListener(this);
     }
 
     public void initHeader() {
@@ -72,27 +79,27 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.menuButton:
+            case R.id.leftButton:
                 break;
-            case R.id.backButton:
+            case R.id.rightButton:
                 break;
         }
     }
 
-    public void setMenuButtonVisible(boolean isVisible) {
-        menuButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+    public void setLeftButtonVisible(boolean isVisible) {
+        mRightButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
     }
 
-    public void setMenuButtonEnable(boolean isEnable) {
-        menuButton.setEnabled(isEnable);
+    public void setRightButtonVisible(boolean isVisible) {
+        mLeftButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
     }
 
-    public void setBackButtonVisible(boolean isVisible) {
-        backButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+    public void setLeftButtonEnable(boolean isEnable) {
+        mLeftButton.setEnabled(isEnable);
     }
 
-    public void setBackButtonEnable(boolean isEnable) {
-        menuButton.setEnabled(isEnable);
+    public void setRightButtonEnable(boolean isEnable) {
+        mLeftButton.setEnabled(isEnable);
     }
 
     public void setHeaderVisible(boolean isVisible) {
