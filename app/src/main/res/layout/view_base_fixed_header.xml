@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#E4E4E4"
     android:padding="24dp">
 
@@ -22,7 +23,7 @@
         android:layout_toRightOf="@+id/leftButton"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle"
+        tools:text="TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle"
         android:textSize="17sp"
         android:textStyle="bold" />
 
