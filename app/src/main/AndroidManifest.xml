@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FsFirstTemplate">
         <activity
+            android:name=".view.tamplate.FixedHeaderActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.base.BaseActivity"
             android:exported="false" />
     </application>

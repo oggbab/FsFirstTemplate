@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class FixedHeader extends AppCompatActivity {
+import com.fsoon.android.fsfirsttemplate.R;
+
+public class FixedHeaderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
