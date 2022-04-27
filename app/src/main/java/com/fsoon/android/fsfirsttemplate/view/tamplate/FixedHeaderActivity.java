@@ -1,7 +1,9 @@
 package com.fsoon.android.fsfirsttemplate.view.tamplate;
 
+import android.app.ActionBar;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -10,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.fsoon.android.fsfirsttemplate.R;
@@ -27,6 +28,7 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fixed_header);
         mHeader = findViewById(R.id.header);
+//                mHeaderViewGroup = (ViewGroup) getLayoutInflater().inflate(R.layout.view_base_fixed_header, null);
     }
 
     public void init(String title) {
@@ -66,6 +68,16 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void initHeader() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
+        actionBar.setDisplayHomeAsUpEnabled(true);
+//        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+//        actionBar.setCustomView(mHeaderViewGroup, params);
+        actionBar.setCustomView(mHeaderViewGroup);
+
 /*        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mHeaderViewGroup = (ViewGroup) getLayoutInflater().inflate(R.layout.view_base_fixed_header, null);
@@ -76,13 +88,6 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
         actionBar.setDisplayShowTitleEnabled(false);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
         actionBar.setCustomView(mHeaderViewGroup, params);*/
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_tool_bar, menu);
-        return true;
     }
 
     @Override
