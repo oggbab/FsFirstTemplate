@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fsoon.android.fsfirsttemplate.R;
+import com.fsoon.android.fsfirsttemplate.common.util.LogUtil;
 import com.fsoon.android.fsfirsttemplate.view.base.BaseActivity;
 
 public class FixedHeaderActivity extends BaseActivity implements View.OnClickListener {
@@ -18,24 +19,22 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void init(String title) {
-        initButton();
+        initViews();
         setTitle(title);
     }
 
     public void init(String title, boolean lVisible, boolean rVisible) {
-        initButton();
+        initViews();
         setTitle(title);
         setLeftButtonVisible(lVisible);
         setRightButtonVisible(rVisible);
     }
 
-    public void init(String title, boolean lVisible, boolean rVisible, boolean lEnable, boolean rEnable) {
-        initButton();
-        setTitle(title);
-        setLeftButtonVisible(lVisible);
-        setRightButtonVisible(rVisible);
-        setLeftButtonEnable(lEnable);
-        setRightButtonEnable(rEnable);
+    private void initViews() {
+        mLeftButton = findViewById(R.id.leftButton);
+        mRightButton = findViewById(R.id.rightButton);
+        mLeftButton.setOnClickListener(this);
+        mRightButton.setOnClickListener(this);
     }
 
     public void setTitle(String title) {
@@ -43,17 +42,11 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
         titleTextView.setText(title);
     }
 
-    private void initButton() {
-        mLeftButton = findViewById(R.id.rightButton);
-        mRightButton = findViewById(R.id.leftButton);
-        mLeftButton.setOnClickListener(this);
-        mRightButton.setOnClickListener(this);
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.leftButton:
+                onClickToolbarLeftButton();
                 break;
             case R.id.rightButton:
                 break;
@@ -62,20 +55,19 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
 
     public void setLeftButtonVisible(boolean isVisible) {
         mLeftButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
-        mLeftButton.setClickable(isVisible);
+        mLeftButton.setEnabled(isVisible);
     }
 
     public void setRightButtonVisible(boolean isVisible) {
         mRightButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
-        mRightButton.setClickable(isVisible);
+        mRightButton.setEnabled(isVisible);
     }
 
-    public void setLeftButtonEnable(boolean isEnable) {
-        mLeftButton.setEnabled(isEnable);
+    protected void onClickToolbarLeftButton() {
+
     }
 
-    public void setRightButtonEnable(boolean isEnable) {
-        mRightButton.setEnabled(isEnable);
-    }
+    protected void onClickToolbarRightButton() {
 
+    }
 }
