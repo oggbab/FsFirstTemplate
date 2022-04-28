@@ -1,6 +1,9 @@
 package com.fsoon.android.fsfirsttemplate;
 
+import android.app.Activity;
 import android.app.Application;
+
+import androidx.core.app.ActivityCompat;
 
 public class FsApp extends Application {
     private static FsApp mApp;
