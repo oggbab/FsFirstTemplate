@@ -49,6 +49,7 @@ public class FixedHeaderActivity extends BaseActivity implements View.OnClickLis
                 onClickToolbarLeftButton();
                 break;
             case R.id.rightButton:
+                onClickToolbarRightButton();
                 break;
         }
     }
