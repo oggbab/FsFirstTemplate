@@ -14,9 +14,6 @@ public class Errors {
         if(context == null || ((AppCompatActivity)context).isFinishing())
             return;
 
-        if(res.getResultCode() == 551)
-            return;
-
         String message = null;
 
         if(!TextUtils.isEmpty(res.getResultMessage()))
@@ -42,9 +39,6 @@ public class Errors {
     }
 
     public static void showExitPopup(final Context context, ResponseBase res){
-        if(res.getResultCode() == 551)
-            return;
-
         String message = null;
 
         if(!TextUtils.isEmpty(res.getResultMessage()))

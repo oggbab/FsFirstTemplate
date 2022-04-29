@@ -1,12 +1,14 @@
 package com.fsoon.android.fsfirsttemplate.net;
 
-import static com.fsoon.android.fsfirsttemplate.net.model.ResponseBase.RETURN_CODE_999;
+
+import static com.fsoon.android.fsfirsttemplate.net.model.ResponseBase.RESPONSE_FAIL;
 
 import android.content.Context;
-
 import com.fsoon.android.fsfirsttemplate.net.Service.RestfulService;
 import com.fsoon.android.fsfirsttemplate.net.model.ResponseError;
+import com.fsoon.android.fsfirsttemplate.net.model.goodpay.ResponseAppVersion;
 import com.fsoon.android.fsfirsttemplate.net.model.search.ResponseShopSearch;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,9 +19,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NetworkManager {
+public class ApiManager {
 
-    private static NetworkManager mInstance;
+    private static ApiManager mInstance;
     private FsAPI fsAPI;
     private static Context context;
 
@@ -30,9 +32,9 @@ public class NetworkManager {
     /**
      * Constructor
      */
-    public static NetworkManager getInstance(Context c) {
+    public static ApiManager getInstance(Context c) {
         if (mInstance == null) {
-            mInstance = new NetworkManager(c);
+            mInstance = new ApiManager(c);
         }
         context = c;
         return mInstance;
@@ -41,7 +43,7 @@ public class NetworkManager {
     /**
      * init method
      */
-    private NetworkManager(Context c) { //mCtx = context;
+    private ApiManager(Context c) { //mCtx = context;
         fsAPI = RestfulService.getInstance(c);
     }
 
@@ -63,21 +65,12 @@ public class NetworkManager {
     }
 
     private void setResultError(OnNetworkListener listener, APIConstants.URL requestId, String sub, Object res) {
-//        if (BuildConfig.DEBUG) {
-//            Logger.e("Network Error : ", requestId.name() + "_" + sub + " , " + ((ResponseBase) res).getResultCode() + " , " + ((ResponseBase) res).getResultMessage());
-//        }
         if (listener != null) {
-            /*ResponseBase base = new ResponseBase();
-            base.setResultCode(550);
-            base.setResultMessage(log);*/
             listener.OnNetworkResult(requestId, res);
         }
     }
 
     public ResponseError parseError(Response<?> response) {
-        /*if (retrofit == null) {
-            return new ResponseError(ResponseBase.RETURN_CODE_999, "Network Retrofit Error");
-        }*/
         ResponseError error = null;
         /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(APIConstants.BASE_URL)
@@ -88,24 +81,20 @@ public class NetworkManager {
             //error = converter.convert(response.errorBody());
             JSONObject json = new JSONObject(response.errorBody().string());
             //Logger.e("json  == " + json.toString());
-            int resultCode = 0;
-            if (json.has("resultcode")) {
-                resultCode = json.getInt("resultcode");
+            String retcode = "";
+            if (json.has("retcode")) {
+                retcode = json.getString("retcode");
             }
-            String resultMessage = "";
-            if (json.has("resultmessage")) {
-                resultMessage = json.getString("resultmessage");
+            String retmsg = "";
+            if (json.has("retmsg")) {
+                retmsg = json.getString("retmsg");
             }
-            String resultOptional = "";
-            if (json.has("resultoptional")) {
-                resultOptional = json.getString("resultoptional");
-            }
+
             error = new ResponseError(
-                    resultCode,
-                    resultMessage,
-                    resultOptional);
+                    retcode,
+                    retmsg);
         } catch (IOException | JSONException e) {
-            error = new ResponseError(RETURN_CODE_999, e.toString(), "");
+            error = new ResponseError(RESPONSE_FAIL, e.toString());
         }
         return error;
     }
@@ -137,6 +126,33 @@ public class NetworkManager {
             }
         });
     }
+
+    public void requestAppVersion(String os, String version, String packageName, final OnNetworkListener listener) {
+        JsonObject json = new JsonObject();
+        json.addProperty("os", "AND");
+        json.addProperty("version", "01.00.01");
+        json.addProperty("packageName", "com.kt.android.goodpay");
+
+        Call<ResponseAppVersion> service = fsAPI.requestAppVersion(json.toString());
+        service.enqueue(new Callback<ResponseAppVersion>() {
+
+            @Override
+            public void onResponse(Call<ResponseAppVersion> call, Response<ResponseAppVersion> response) {
+                if(response.isSuccessful()) {
+                    setResult(listener, APIConstants.URL.APP_VERSION_INFO, response.body());
+                } else {
+                    ResponseError error = parseError(response);
+                    setResult(listener, APIConstants.URL.APP_VERSION_INFO, new ResponseAppVersion(error.getResultCode(), error.getResultMessage()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAppVersion> call, Throwable t) {
+                setResultError(listener, APIConstants.URL.APP_VERSION_INFO, new ResponseAppVersion(t.toString()));
+            }
+        });
+    }
+
 
 //    public void requestUpdate(final OnNetworkListener listener) {
 //        Call<ResponseUpdate> service = fsAPI.requestUpdate(APIConstants.URL_UPDATEINFO);

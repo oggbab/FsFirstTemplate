@@ -8,10 +8,10 @@ import java.util.ArrayList;
 public class ResponseShopSearchItem extends ResponseBase {
 
     public ResponseShopSearchItem(String msg) {
-        super(RETURN_CODE_999, msg);
+        super(RESPONSE_FAIL, msg);
     }
 
-    public ResponseShopSearchItem(int code, String msg) {
+    public ResponseShopSearchItem(String code, String msg) {
         super(code, msg);
     }
 

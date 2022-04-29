@@ -97,8 +97,10 @@ public class RestfulService {
                 HttpUrl url;
 
                 request = request.newBuilder()
-                        .addHeader("X-Naver-Client-Id", APIConstants.NAVER_CLIENT_ID)
-                        .addHeader("X-Naver-Client-Secret", APIConstants.NAMER_CLIENT_SECRET)
+                        .addHeader("APP-PACKAGE-NAME", "com.kt.android.goodpay")
+                .addHeader("SERVICE-NAME", "AP0000000001")
+//                        .addHeader("X-Naver-Client-Id", APIConstants.NAVER_CLIENT_ID)
+//                        .addHeader("X-Naver-Client-Secret", APIConstants.NAMER_CLIENT_SECRET)
                         .build();
 
                 if(addParameter) {
@@ -106,38 +108,6 @@ public class RestfulService {
                     url = request.url().newBuilder()
 //                            .addQueryParameter(APIConstants.APIKEY, appData.getApiKey())
 //                            .addQueryParameter(APIConstants.CREDENTIAL, appData.getCredential())
-//                            .addQueryParameter(APIConstants.DEVICE, appData.getDevice())
-//                            .addQueryParameter(APIConstants.PARTNER, appData.getPartner())
-//                            .addQueryParameter(APIConstants.REGION, appData.getRegion())
-//                            .addQueryParameter(APIConstants.DRM, appData.getDrm().toLowerCase())
-//                            .addQueryParameter(APIConstants.TARGETAGE, appData.getTargetAge())
-                            .build();
-
-                } else {
-                    url = request.url().newBuilder().build();
-                }
-                request = request.newBuilder().url(url).build();
-                LogUtil.w("API", "request url : "+request.url());
-                return chain.proceed(request);
-            }
-        }).addNetworkInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                Request request = chain.request();
-                HttpUrl url;
-
-                if(addParameter) {
-                    /* 공통 parameters */
-                    url = request.url().newBuilder()
-                            .addQueryParameter("X-Naver-Client-Id", APIConstants.NAVER_CLIENT_ID)
-                            .addQueryParameter("X-Naver-Client-Secret", APIConstants.NAMER_CLIENT_SECRET)
-//                            .addQueryParameter(APIConstants.APIKEY, appData.getApiKey())
-//                            .addQueryParameter(APIConstants.CREDENTIAL, appData.getCredential())
-//                            .addQueryParameter(APIConstants.DEVICE, appData.getDevice())
-//                            .addQueryParameter(APIConstants.PARTNER, appData.getPartner())
-//                            .addQueryParameter(APIConstants.REGION, appData.getRegion())
-//                            .addQueryParameter(APIConstants.DRM, appData.getDrm().toLowerCase())
-//                            .addQueryParameter(APIConstants.TARGETAGE, appData.getTargetAge())
                             .build();
 
                 } else {

@@ -2,6 +2,8 @@ package com.fsoon.android.fsfirsttemplate.net.Service;
 
 import android.util.Log;
 
+import com.fsoon.android.fsfirsttemplate.common.util.LogUtil;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,7 +24,7 @@ public abstract class RetryableCallback<T> implements Callback<T> {
     public void onResponse(Call<T> call, Response<T> response) {
         if (!APIHelper.isCallSuccess(response))
             if (retryCount++ < totalRetries) {
-                Log.v(TAG, "Retrying API Call -  (" + retryCount + " / " + totalRetries + ")");
+                LogUtil.v(TAG, "Retrying API Call -  (" + retryCount + " / " + totalRetries + ")");
                 retry();
             } else
                 onFinalResponse(call, response);
@@ -32,9 +34,9 @@ public abstract class RetryableCallback<T> implements Callback<T> {
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
-        Log.e(TAG, t.getMessage());
+        LogUtil.e(TAG, t.getMessage());
         if (retryCount++ < totalRetries) {
-            Log.v(TAG, "Retrying API Call -  (" + retryCount + " / " + totalRetries + ")");
+            LogUtil.v(TAG, "Retrying API Call -  (" + retryCount + " / " + totalRetries + ")");
             retry();
         } else
             onFinalFailure(call, t);
