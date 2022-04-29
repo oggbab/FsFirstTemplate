@@ -97,8 +97,11 @@ public class RestfulService {
                 HttpUrl url;
 
                 request = request.newBuilder()
+                        //착한페이
                         .addHeader("APP-PACKAGE-NAME", "com.kt.android.goodpay")
                 .addHeader("SERVICE-NAME", "AP0000000001")
+
+                        //네이버
 //                        .addHeader("X-Naver-Client-Id", APIConstants.NAVER_CLIENT_ID)
 //                        .addHeader("X-Naver-Client-Secret", APIConstants.NAMER_CLIENT_SECRET)
                         .build();

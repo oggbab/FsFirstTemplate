@@ -13,6 +13,21 @@
         android:theme="@style/Theme.FsFirstTemplate"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.tamplate.CollapsHeaderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.tamplate.ScrollingHeaderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.tamplate.FixedHeaderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.test.TestNetworkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.test.TestHeaderActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.test.TestActivity"
             android:exported="true">
             <intent-filter>
