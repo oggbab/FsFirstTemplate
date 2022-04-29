@@ -129,9 +129,9 @@ public class ApiManager {
 
     public void requestAppVersion(String os, String version, String packageName, final OnNetworkListener listener) {
         JsonObject json = new JsonObject();
-        json.addProperty("os", "AND");
-        json.addProperty("version", "01.00.01");
-        json.addProperty("packageName", "com.kt.android.goodpay");
+        json.addProperty("os", os);
+        json.addProperty("version", version);
+        json.addProperty("packageName", packageName);
 
         Call<ResponseAppVersion> service = fsAPI.requestAppVersion(json.toString());
         service.enqueue(new Callback<ResponseAppVersion>() {
