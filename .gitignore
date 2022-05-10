@@ -2,7 +2,7 @@
 *.jks
 .gradle
 /local.properties
-.idea
+.idea/
 .externalNativeBuild
 /app/build
 /app/real
