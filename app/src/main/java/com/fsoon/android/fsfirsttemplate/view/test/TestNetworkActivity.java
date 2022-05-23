@@ -12,6 +12,8 @@ import com.fsoon.android.fsfirsttemplate.net.model.search.ResponseShopSearch;
 import com.fsoon.android.fsfirsttemplate.net.model.search.ResponseShopSearchItem;
 import com.fsoon.android.fsfirsttemplate.view.base.BaseActivity;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class TestNetworkActivity extends BaseActivity {
@@ -25,9 +27,9 @@ public class TestNetworkActivity extends BaseActivity {
 
     private void requestNaverApi() {
 
-        ApiManager.getInstance(this).requestSearchShop("모자", 1, 15, "sim", new ApiManager.OnNetworkListener<ResponseShopSearch>() {
+        ApiManager.Companion.getInstance(this).requestSearchShop("모자", 1, 15, "sim", new ApiManager.OnNetworkListener<ResponseShopSearch>() {
             @Override
-            public void OnNetworkResult(APIConstants.URL requestId, ResponseShopSearch res) {
+            public void OnNetworkResult(@NotNull APIConstants.URL requestId, @NotNull Object res) {
                 if (res != null && res.isSuccess()) {
                     ArrayList<ResponseShopSearchItem> itemList = res.items;
                     if (itemList.size() > 0) {
@@ -41,9 +43,10 @@ public class TestNetworkActivity extends BaseActivity {
     }
 
     private void requestGoodpayVersion() {
-        ApiManager.getInstance(this).requestAppVersion("AND", "01.00.01", "com.kt.android.goodpay", new ApiManager.OnNetworkListener<ResponseAppVersion>() {
+        ApiManager.Companion.getInstance(this).
+                requestAppVersion("AND", "01.00.01", "com.kt.android.goodpay", new ApiManager.OnNetworkListener<ResponseAppVersion>() {
             @Override
-            public void OnNetworkResult(APIConstants.URL requestId, ResponseAppVersion res) {
+            public void OnNetworkResult(@NotNull APIConstants.URL requestId, @NotNull Object res) {
                 if (res != null && res.isSuccess()) {
                     Toast.makeText(TestNetworkActivity.this, "version : " + res.data.appVersion, Toast.LENGTH_LONG).show();
                 } else {
