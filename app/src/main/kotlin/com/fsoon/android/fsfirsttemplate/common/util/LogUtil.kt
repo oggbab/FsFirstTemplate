@@ -52,7 +52,7 @@ class LogUtil {
 
         fun i(TAG: String, msg: String) {
             if (debug && BuildConfig.DEBUG) {
-                Log.i(TAG, msg!!)
+                Log.i(TAG, msg)
             }
             writeFile(TAG, msg)
         }

@@ -272,7 +272,7 @@ class Utils {
             editText?.clearFocus()
             val mInputMethodManager =
                 context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            mInputMethodManager.hideSoftInputFromWindow(editText!!.windowToken, 0)
+            mInputMethodManager.hideSoftInputFromWindow(editText?.windowToken, 0)
         }
 
         /**
@@ -577,7 +577,7 @@ class Utils {
                 context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             val taskInfo = activityManager.getRunningTasks(1)
             val topActivity = taskInfo[0].topActivity
-            val runClassName = topActivity!!.className
+            val runClassName = topActivity?.className
             return runClassName ?: ""
         }
 
@@ -923,7 +923,7 @@ class Utils {
             } else {
                 val taskInfo = am.getRunningTasks(1)
                 val componentInfo = taskInfo[0].topActivity
-                if (componentInfo!!.packageName == context.packageName) {
+                if (componentInfo?.packageName == context.packageName) {
                     isInBackground = false
                 }
             }

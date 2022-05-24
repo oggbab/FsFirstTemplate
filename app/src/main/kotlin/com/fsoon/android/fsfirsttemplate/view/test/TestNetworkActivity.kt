@@ -25,7 +25,7 @@ class TestNetworkActivity : BaseActivity() {
                     ) {
                         if (res != null && res.isSuccess) {
                             val itemList = res.items
-                            if (itemList!!.size > 0) {
+                            if (itemList.size > 0) {
                             }
                         } else {
                             Errors.show(this@TestNetworkActivity, res, false)

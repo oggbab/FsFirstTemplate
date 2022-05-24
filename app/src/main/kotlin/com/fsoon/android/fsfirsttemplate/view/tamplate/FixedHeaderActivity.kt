@@ -7,10 +7,11 @@ import android.widget.TextView
 import com.fsoon.android.fsfirsttemplate.R
 import com.fsoon.android.fsfirsttemplate.view.base.BaseActivity
 
-open class FixedHeaderActivity : BaseActivity(), View.OnClickListener {
+class FixedHeaderActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var mLeftButton: ImageView
     private lateinit var mRightButton: ImageView
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -47,15 +48,15 @@ open class FixedHeaderActivity : BaseActivity(), View.OnClickListener {
     }
 
     fun setLeftButtonVisible(isVisible: Boolean) {
-        mLeftButton!!.visibility =
+        mLeftButton.visibility =
             if (isVisible) View.VISIBLE else View.INVISIBLE
-        mLeftButton!!.isEnabled = isVisible
+        mLeftButton.isEnabled = isVisible
     }
 
     fun setRightButtonVisible(isVisible: Boolean) {
-        mRightButton!!.visibility =
+        mRightButton.visibility =
             if (isVisible) View.VISIBLE else View.INVISIBLE
-        mRightButton!!.isEnabled = isVisible
+        mRightButton.isEnabled = isVisible
     }
 
     protected fun onClickToolbarLeftButton() {}

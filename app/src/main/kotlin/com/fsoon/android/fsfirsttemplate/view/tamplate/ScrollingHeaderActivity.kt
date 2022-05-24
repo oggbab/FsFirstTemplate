@@ -10,6 +10,7 @@ import com.fsoon.android.fsfirsttemplate.view.base.BaseActivity
 class ScrollingHeaderActivity : BaseActivity(), View.OnClickListener {
     private lateinit var mLeftButton: ImageView
     private lateinit var mRightButton: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scrolling_header)
@@ -62,20 +63,20 @@ class ScrollingHeaderActivity : BaseActivity(), View.OnClickListener {
     }
 
     fun setLeftButtonVisible(isVisible: Boolean) {
-        mLeftButton!!.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
-        mLeftButton!!.isClickable = isVisible
+        mLeftButton.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
+        mLeftButton.isClickable = isVisible
     }
 
     fun setRightButtonVisible(isVisible: Boolean) {
-        mRightButton!!.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
-        mRightButton!!.isClickable = isVisible
+        mRightButton.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
+        mRightButton.isClickable = isVisible
     }
 
     fun setLeftButtonEnable(isEnable: Boolean) {
-        mLeftButton!!.isEnabled = isEnable
+        mLeftButton.isEnabled = isEnable
     }
 
     fun setRightButtonEnable(isEnable: Boolean) {
-        mRightButton!!.isEnabled = isEnable
+        mRightButton.isEnabled = isEnable
     }
 }

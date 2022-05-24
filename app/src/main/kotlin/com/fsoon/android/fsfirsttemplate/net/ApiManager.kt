@@ -93,7 +93,7 @@ class ApiManager private constructor(c: Context) {
         listener: OnNetworkListener<*>?
     ) {
         val service = fsAPI.requestShopSearch(query, start, display, sort)
-        service!!.enqueue(object : Callback<ResponseShopSearch?> {
+        service?.enqueue(object : Callback<ResponseShopSearch?> {
             override fun onResponse(
                 call: Call<ResponseShopSearch?>,
                 response: Response<ResponseShopSearch?>
@@ -130,8 +130,8 @@ class ApiManager private constructor(c: Context) {
         json.addProperty("os", os)
         json.addProperty("version", version)
         json.addProperty("packageName", packageName)
-        val service = fsAPI!!.requestAppVersion(json.toString())
-        service!!.enqueue(object : Callback<ResponseAppVersion?> {
+        val service = fsAPI.requestAppVersion(json.toString())
+        service?.enqueue(object : Callback<ResponseAppVersion?> {
             override fun onResponse(
                 call: Call<ResponseAppVersion?>,
                 response: Response<ResponseAppVersion?>
