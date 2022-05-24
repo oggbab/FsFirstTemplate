@@ -133,7 +133,6 @@ class Utils {
             val alertBuilder = AlertDialog.Builder(
                 ContextThemeWrapper(
                     context,
-                    and
                     androidx.appcompat.R.style.Theme_AppCompat_Light_Dialog_Alert
                 )
             )
