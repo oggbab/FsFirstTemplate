@@ -1,88 +1,62 @@
 package com.fsoon.android.fsfirsttemplate.common.util
 
-import com.google.gson.annotations.SerializedName
-import android.text.TextUtils
-import kotlin.jvm.Synchronized
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.OkHttpClient
-import retrofit2.converter.scalars.ScalarsConverterFactory
-import okhttp3.logging.HttpLoggingInterceptor
-import com.fsoon.android.fsfirsttemplate.BuildConfig
-import okhttp3.Interceptor
-import kotlin.Throws
-import okhttp3.HttpUrl
-import android.os.Build
-import okhttp3.ConnectionSpec
-import okhttp3.TlsVersion
-import retrofit2.Converter
-import okhttp3.ResponseBody
-import retrofit2.http.GET
-import retrofit2.http.POST
-import org.json.JSONObject
-import org.json.JSONException
-import com.google.gson.JsonObject
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.fsoon.android.fsfirsttemplate.R
-import android.content.Intent
-import androidx.core.app.ActivityCompat
-import android.content.DialogInterface
-import android.util.DisplayMetrics
-import android.util.TypedValue
 import android.annotation.TargetApi
 import android.app.*
-import androidx.core.content.ContextCompat
-import android.app.ActivityManager.RunningTaskInfo
-import android.content.ComponentName
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import com.google.android.material.tabs.TabLayout
-import android.view.ViewGroup.MarginLayoutParams
 import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
+import android.text.TextUtils
+import android.util.DisplayMetrics
 import android.util.Log
+import android.util.TypedValue
 import android.view.*
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import java.lang.NullPointerException
-import java.lang.NumberFormatException
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.fsoon.android.fsfirsttemplate.R
+import com.google.android.material.tabs.TabLayout
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
- 
+
 class Utils {
     companion object {
         const val MSG_NONE = 0
         const val MSG_OK = 11
         const val MSG_CANCEL = 12
         const val MSG_NEXT = 13
-    
+
         /**
          * Application 종료
          *
          * @param activity
          */
-        
-        
+
+
         fun quitApp(activity: Activity) {
             activity.moveTaskToBack(true)
             ActivityCompat.finishAffinity(activity)
             //android.os.Process.killProcess(android.os.Process.myPid());
         }
-    
+
         fun isEmpty(s: Any?): Boolean {
-           
+
             if (s == null) {
                 return true
             }
@@ -98,21 +72,21 @@ class Utils {
             if (s is List<*>) {
                 return s.isEmpty()
             }
-            return if (s is Array<Any>) {
+            return if (s is Array<*>) {
                 (s as Array<Any?>).size == 0
             } else false
         }
-    
+
         fun DialogShowOneBt(
             context: Activity,
             str_msg: String,
             str_ok: String,
             listener: DialogInterface.OnClickListener?
         ) {
-            DialogShow(true, context, null, str_msg, str_ok, "", listener)
+            DialogShow(true, context, "", str_msg, str_ok, "", listener)
         }
-    
-        
+
+
         fun DialogShowOneBt(
             context: Activity,
             str_title: String,
@@ -122,7 +96,7 @@ class Utils {
         ) {
             DialogShow(true, context, str_title, str_msg, str_ok, "", listener)
         }
-    
+
         fun DialogShow(
             context: Activity,
             str_msg: String,
@@ -130,9 +104,9 @@ class Utils {
             str_cancel: String,
             listener: DialogInterface.OnClickListener?
         ) {
-            DialogShow(false, context, null, str_msg, str_ok, str_cancel, listener)
+            DialogShow(false, context, "", str_msg, str_ok, str_cancel, listener)
         }
-    
+
         fun DialogShow(
             context: Activity,
             str_title: String,
@@ -143,11 +117,11 @@ class Utils {
         ) {
             DialogShow(false, context, str_title, str_msg, str_ok, str_cancel, listener)
         }
-    
+
         /*public static void DialogShowTextColor(Activity context, String str_title, String str_msg, String coloredText, String color, String str_ok, String str_cancel, final DialogInterface.OnClickListener listener) {
             DialogShowTextColor(true, context, str_title, str_msg, coloredText, color, str_ok, str_cancel, listener);
         }*/
-        
+
         fun DialogShow(
             oneButton: Boolean, context: Activity, str_title: String, str_msg: String,
             str_ok: String, str_cancel: String, listener: DialogInterface.OnClickListener?
@@ -159,10 +133,11 @@ class Utils {
             val alertBuilder = AlertDialog.Builder(
                 ContextThemeWrapper(
                     context,
+                    and
                     androidx.appcompat.R.style.Theme_AppCompat_Light_Dialog_Alert
                 )
             )
-    
+
             // 커스텀 타이틀 2줄 이상 표시 위해
             val titleTextView = View.inflate(context, R.layout.dialog_title, null)
             val textview_title = titleTextView.findViewById<View>(R.id.textview_title) as TextView
@@ -189,7 +164,7 @@ class Utils {
                         listener.onClick(dialog, DIALOG_DISSMISS);*/
             }
         }
-    
+
         private fun setDialogTitle(c: Context, str_title: String): String {
             var str_title = str_title
             if (str_title == null) {
@@ -201,49 +176,53 @@ class Utils {
             }
             return str_title
         }
-    
+
         fun getScreenWidth(context: Context): Int {
             val displayMetrics = DisplayMetrics()
             if (context is Activity) {
                 context.windowManager
                     .defaultDisplay.getMetrics(displayMetrics)
             } else if (context is Application) {
-                val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                val windowManager =
+                    context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
             } else if (context is Service) {
-                val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                val windowManager =
+                    context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
             }
             return displayMetrics.widthPixels
         }
-    
+
         fun getScreenHeight(context: Context): Int {
             val displayMetrics = DisplayMetrics()
             if (context is Activity) {
                 context.windowManager
                     .defaultDisplay.getMetrics(displayMetrics)
             } else if (context is Application) {
-                val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                val windowManager =
+                    context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
             } else if (context is Service) {
-                val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                val windowManager =
+                    context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
             }
             return displayMetrics.heightPixels
         }
-    
+
         fun getRatioLength(length: Float, ratioWidth: Float, ratioHeight: Float): Float {
             return length * ratioHeight / ratioWidth
         }
-    
-        
+
+
         fun getPixelToDp(context: Context, dp: Float): Int {
             return TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, dp,
                 context.resources.displayMetrics
             ).toInt()
         }
-    
+
         fun getStatusBarHeight(context: Context): Int {
             val resources = context.resources
             val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
@@ -256,11 +235,11 @@ class Utils {
                 ).toInt()
             }
         }
-    
+
         fun getAndroidId(context: Context): String {
             return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
         }
-    
+
         fun isTablet(context: Context): Boolean {
             var bTablet = false
             val screenSizeType = (context.resources.configuration.screenLayout
@@ -272,29 +251,31 @@ class Utils {
             }
             return bTablet
         }
-    
+
         fun getScreenOrientation(context: Context): Int {
             val displayMetrics = DisplayMetrics()
             if (context is Activity) {
                 context.windowManager
                     .defaultDisplay.getMetrics(displayMetrics)
             } else if (context is Application) {
-                val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                val windowManager =
+                    context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
             } else if (context is Service) {
-                val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                val windowManager =
+                    context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
             }
             return if (displayMetrics.widthPixels < displayMetrics.heightPixels) Configuration.ORIENTATION_PORTRAIT else Configuration.ORIENTATION_LANDSCAPE
         }
-    
+
         fun downKeyboard(context: Context, editText: EditText?) {
             editText?.clearFocus()
             val mInputMethodManager =
                 context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             mInputMethodManager.hideSoftInputFromWindow(editText!!.windowToken, 0)
         }
-    
+
         /**
          * 문자열내 특정 문자색 지정
          *
@@ -363,7 +344,7 @@ class Utils {
             }
             return NumberFormat.getNumberInstance(Locale.KOREA).format(v.toLong()) + unit
         }
-    
+
         /**
          * 세자리 컴마 + 소수점 두자리
          *
@@ -380,7 +361,7 @@ class Utils {
                 decimalFormat.format(num.toDouble())
             }
         }
-    
+
         fun setConvertComma(num: Double, decimal: Boolean): String {
             return if (decimal) {
                 val decimalFormat = DecimalFormat("#,##0.00")
@@ -390,7 +371,7 @@ class Utils {
                 decimalFormat.format(num)
             }
         }
-    
+
         fun setConvertComma(num: Int, decimal: Boolean): String {
             return if (decimal) {
                 val decimalFormat = DecimalFormat("#,##0.00")
@@ -400,7 +381,7 @@ class Utils {
                 decimalFormat.format(num.toLong())
             }
         }
-    
+
         fun isIntegerFromStr(num: String): Boolean {
             try {
                 num.toInt()
@@ -411,7 +392,7 @@ class Utils {
             }
             return true
         }
-    
+
         /**
          * TextView 취소선 적용
          *
@@ -420,7 +401,7 @@ class Utils {
         fun setCancelLine(tv: TextView) {
             tv.paintFlags = tv.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         }
-    
+
         /**
          * Statusbar Drawable 및 Icon 밝기 적용
          *
@@ -465,7 +446,7 @@ class Utils {
                 }
             }
         }
-    
+
         /**
          * Status bar color 및 Icon 밝기 적용
          */
@@ -485,14 +466,14 @@ class Utils {
                 }
             }
         }
-    
+
         fun hiddenSoftKey(c: Context, editText: EditText?) {
             if (editText == null) return
             editText.clearFocus()
             val im = c.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             im.hideSoftInputFromWindow(editText.windowToken, 0)
         }
-    
+
         /**
          * 성인인증 1년 지났는지 체크
          *
@@ -508,7 +489,7 @@ class Utils {
                 try {
                     val beginDate = formatter.parse(adultDay)
                     val endDate = formatter.parse(nowTime)
-    
+
                     // 시간차이를 시간,분,초를 곱한 값으로 나누면 하루 단위가 나옴
                     val diff = endDate.time - beginDate.time
                     return diff / (24 * 60 * 60 * 1000)
@@ -518,7 +499,7 @@ class Utils {
             }
             return 366
         }
-    
+
         /***
          * 페이저 내에서의 indicator
          */
@@ -546,18 +527,18 @@ class Utils {
                 lay.addView(iv)
             }
         }
-    
+
         /**
          * 소프트키 유무체크
          *
          * @param context
          * @return
          */
-        
+
         fun hasSoftMenu(context: Context): Boolean {
             //메뉴버튼 유무
             val hasMenuKey = ViewConfiguration.get(context.applicationContext).hasPermanentMenuKey()
-    
+
             //뒤로가기 버튼 유무
             val hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK)
             return if (!hasMenuKey && !hasBackKey) { // lg폰 소프트키일 경우
@@ -566,7 +547,7 @@ class Utils {
                 false
             }
         }
-    
+
         /**
          * 소프트키 높이 가져오기
          *
@@ -585,7 +566,7 @@ class Utils {
             }
             return softKeyHeight
         }
-    
+
         /**
          * 현재 보여지는 액티비티 클래스 이름 가져오기
          *
@@ -593,13 +574,14 @@ class Utils {
          * @return
          */
         fun getRunActivityClassName(context: Context): String {
-            val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val activityManager =
+                context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             val taskInfo = activityManager.getRunningTasks(1)
             val topActivity = taskInfo[0].topActivity
             val runClassName = topActivity!!.className
             return runClassName ?: ""
         }
-    
+
         fun fastblur(sentBitmap: Bitmap, scale: Float, radius: Int): Bitmap? {
             var sentBitmap = sentBitmap
             val width = Math.round(sentBitmap.width * scale)
@@ -769,7 +751,7 @@ class Utils {
                 stackpointer = radius
                 y = 0
                 while (y < h) {
-    
+
                     // Preserve alpha channel: ( 0xff000000 & pix[yi] )
                     pix[yi] =
                         -0x1000000 and pix[yi] or (dv[rsum] shl 16) or (dv[gsum] shl 8) or dv[bsum]
@@ -811,7 +793,7 @@ class Utils {
             bitmap.setPixels(pix, 0, w, 0, 0, w, h)
             return bitmap
         }
-    
+
         fun drawableToBitmap(drawable: Drawable): Bitmap? {
             var bitmap: Bitmap? = null
             if (drawable is BitmapDrawable) {
@@ -838,13 +820,13 @@ class Utils {
             drawable.draw(canvas)
             return bitmap
         }
-    
+
         fun calling(context: Context, phonenumber: String) {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:$phonenumber")
             context.startActivity(intent)
         }
-    
+
         /**
          * 화면에 탭 가로 사이즈가 균등하게 마진 주기
          *
@@ -852,7 +834,11 @@ class Utils {
          * @param externalMargin
          * @param internalMargin
          */
-        fun wrapTabIndicatorToTitle(tabLayout: TabLayout, externalMargin: Int, internalMargin: Int) {
+        fun wrapTabIndicatorToTitle(
+            tabLayout: TabLayout,
+            externalMargin: Int,
+            internalMargin: Int
+        ) {
             val tabStrip = tabLayout.getChildAt(0)
             val externalMarginPx = getPixelToDp(tabLayout.context, externalMargin.toFloat())
             val internalMarginPx = getPixelToDp(tabLayout.context, internalMargin.toFloat())
@@ -883,7 +869,7 @@ class Utils {
                 tabLayout.requestLayout()
             }
         }
-    
+
         private fun settingMargin(layoutParams: MarginLayoutParams, start: Int, end: Int) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 layoutParams.marginStart = start
@@ -893,7 +879,7 @@ class Utils {
                 layoutParams.rightMargin = end
             }
         }
-    
+
         fun resizeImagePath(originUrl: String, level: Int): String {
             if (TextUtils.isEmpty(originUrl)) {
                 return originUrl
@@ -903,9 +889,10 @@ class Utils {
             return (originUrl.substring(0, originUrl.lastIndexOf('.'))
                     + "_" + Integer.toString(level) + extention)
         }
-    
+
         fun isAppOnForeground(context: Context): Boolean {
-            val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val activityManager =
+                context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             val appProcesses = activityManager.runningAppProcesses ?: return false
             val packageName = context.packageName
             for (appProcess in appProcesses) {
@@ -917,7 +904,7 @@ class Utils {
             }
             return false
         }
-    
+
         fun isAppIsInBackground(context: Context): Boolean {
             var isInBackground = true
             val am = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -943,11 +930,11 @@ class Utils {
             }
             return isInBackground
         }
-    
+
         fun getEncodedUr(urlVaule: String): String {
             return Uri.encode(urlVaule, "UTF-8")
         }
-    
+
         fun darkenStatusBar(activity: Activity, color: Int) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                 && Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1
@@ -958,7 +945,7 @@ class Utils {
                     )
             }
         }
-    
+
         // Code to darken the color supplied (mostly color of toolbar)
         private fun darkenColor(color: Int): Int {
             val hsv = FloatArray(3)
@@ -966,7 +953,7 @@ class Utils {
             hsv[2] *= 0.8f
             return Color.HSVToColor(hsv)
         }
-    
+
         interface AdultCheckListener {
             fun onPlay()
             fun onPopUpPlay()

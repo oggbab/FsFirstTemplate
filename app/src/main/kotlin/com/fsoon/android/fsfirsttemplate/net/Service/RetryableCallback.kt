@@ -1,11 +1,9 @@
 package com.fsoon.android.fsfirsttemplate.net.Service
 
-import android.graphics.drawable.BitmapDrawable
-import com.google.android.material.tabs.TabLayout
-import android.view.ViewGroup.MarginLayoutParams
-import android.app.ActivityManager.RunningAppProcessInfo
 import com.fsoon.android.fsfirsttemplate.common.util.LogUtil
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 abstract class RetryableCallback<T>(private val call: Call<T>, totalRetries: Int) : Callback<T> {
     private var totalRetries = 3
@@ -19,7 +17,7 @@ abstract class RetryableCallback<T>(private val call: Call<T>, totalRetries: Int
     }
 
     override fun onFailure(call: Call<T>, t: Throwable) {
-        LogUtil.e(TAG, t?.message)
+        t?.message?.let { LogUtil.e(TAG, it) }
         if (retryCount++ < totalRetries) {
             LogUtil.v(TAG, "Retrying API Call -  ($retryCount / $totalRetries)")
             retry()

@@ -1,15 +1,17 @@
 package com.fsoon.android.fsfirsttemplate.net
 
-import org.json.JSONObject
-import org.json.JSONException
-import com.google.gson.JsonObject
 import android.content.Context
 import com.fsoon.android.fsfirsttemplate.net.Service.RestfulService
 import com.fsoon.android.fsfirsttemplate.net.model.ResponseBase
 import com.fsoon.android.fsfirsttemplate.net.model.ResponseError
 import com.fsoon.android.fsfirsttemplate.net.model.goodpay.ResponseAppVersion
 import com.fsoon.android.fsfirsttemplate.net.model.search.ResponseShopSearch
-import retrofit2.*
+import com.google.gson.JsonObject
+import org.json.JSONException
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.IOException
 
 class ApiManager private constructor(c: Context) {
@@ -182,9 +184,9 @@ class ApiManager private constructor(c: Context) {
         //if (mInstanse == null) 일때 also{} 호출됨
         fun getInstance(c: Context): ApiManager {
             return mInstance ?: ApiManager(c).also {
-                    mInstance = it
-                    context = c
-                }
+                mInstance = it
+                context = c
+            }
         }
     }
 

@@ -1,7 +1,7 @@
 package com.fsoon.android.fsfirsttemplate.common.util
 
-import com.fsoon.android.fsfirsttemplate.BuildConfig
 import android.util.Log
+import com.fsoon.android.fsfirsttemplate.BuildConfig
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -43,7 +43,7 @@ class LogUtil {
             writeFile(TAG, msg)
         }
 
-        fun e(TAG: String, msg: String?) {
+        fun e(TAG: String, msg: String) {
             if (debug && BuildConfig.DEBUG) {
                 Log.e(TAG, msg)
             }
@@ -95,7 +95,6 @@ class LogUtil {
             }
         }
 
-        @kotlin.jvm.JvmStatic
         fun logException(msg: String?) {
             msg?.let { e(TAG_EXCEPTION, it) }
         }
